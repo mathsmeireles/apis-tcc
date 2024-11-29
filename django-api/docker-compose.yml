@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+    django-db:
+        container_name: django-db
+        image: postgres:13-alpine
+        restart: always
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_DB: django-db
+            POSTGRES_USER: django-db
+            POSTGRES_PASSWORD: 123456
+    django-app:
+        build:
+            context: ./biblioteca
+            dockerfile: Dockerfile
+        ports:
+            - "8000:8000"
+        depends_on:
+            - django-db
